@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Some convenient bash settings.
+
+# how to show directory contents:
+alias l='ls -la --ignore=.?*'
+alias ll='ls -la --ignore=..'
+
+# RCS ci feature change:
+alias ci='ci -u'
+
+# 'sou' is an easy re-read of .bashrc:
+alias sou='source ~/.bashrc'
+
+# 'e' opens any file for editing (may need pre-configuration with thunar)
+e()
+{
+    local tools="exo-open xdg-open"  # depending on one of these tools
+    local tool
+
+    for tool in $tools ; do
+        if [ -x /usr/bin/$tool ] ; then
+            /usr/bin/$tool "$@" >& /dev/null &
+            return
+        fi
+    done
+    echo "Error: none of [$tools] is installed." >&2
+}
+
+# 'v' opens any file for viewing
+v()
+{
+    case "$1" in
+        *.html|*.htm) firefox "$1" >& /dev/null & ;;
+        *) e "$1" ;;
+    esac
+}
+
+# history commands with arrow keys (on an interactive shell):
+case "$-" in
+    *i*)
+        bind '"\e[A":history-search-backward'
+        bind '"\e[B":history-search-forward'
+        ;;
+esac
+
+# prompt shows current directory (different for root):
+if [ $(id -u) -ne 0 ] ; then
+    PS1='\w> '
+else
+    PS1='ROOT# \w> '
+fi
