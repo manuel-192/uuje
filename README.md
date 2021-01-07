@@ -1,2 +1,2 @@
 # uuje
-[Link](https://enumal.github.io/uuje/)
+[Link](https://enumal.github.io/uuje/index.html)
