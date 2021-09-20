@@ -12,29 +12,8 @@ alias ci='ci -u'
 # 'sou' is an easy re-read of .bashrc:
 alias sou='source ~/.bashrc'
 
-# 'e' opens any file for editing (may need pre-configuration with thunar)
-e()
-{
-    local tools="exo-open xdg-open"  # depending on one of these tools
-    local tool
-
-    for tool in $tools ; do
-        if [ -x /usr/bin/$tool ] ; then
-            /usr/bin/$tool "$@" >& /dev/null &
-            return
-        fi
-    done
-    echo "Error: none of [$tools] is installed." >&2
-}
-
-# 'v' opens any file for viewing
-v()
-{
-    case "$1" in
-        *.html|*.htm) firefox "$1" >& /dev/null & ;;
-        *) e "$1" ;;
-    esac
-}
+# 'o' opens any file for editing (may need pre-configuration with thunar)
+o() { exo-open "$@" 2>/dev/null & }
 
 # history commands with arrow keys (on an interactive shell):
 case "$-" in
